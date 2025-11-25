@@ -18,5 +18,6 @@ Se realizó una aplicación que contiene un ABM REST de una entidad "Banco", uti
 4) Listo!
 
 * URLs:
+Actuador: http://localhost:8080/bank-service/actuator/health
 Swagger: http://localhost:8080/bank-service/swagger-ui/index.html
 H2Database: http://localhost:8080/bank-service/h2-console
