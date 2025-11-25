@@ -1,0 +1,103 @@
+package ar.com.flcross.msbank.service.impl;
+
+import ar.com.flcross.msbank.dto.bank.BankRequest;
+import ar.com.flcross.msbank.dto.bank.BankResponse;
+import ar.com.flcross.msbank.entity.BankEntity;
+import ar.com.flcross.msbank.exception.dedicated.BankNotFoundException;
+import ar.com.flcross.msbank.exception.dedicated.DuplicateBankCodeException;
+import ar.com.flcross.msbank.repository.BankRepository;
+import ar.com.flcross.msbank.service.BankService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class BankServiceImpl implements BankService {
+
+    private final BankRepository repository;
+    private final ObjectMapper mapper = new ObjectMapper();
+
+    @Override
+    public BankResponse create(BankRequest request) {
+        if (repository.existsByCode(request.getCode())) {
+            throw new DuplicateBankCodeException(request.getCode());
+        }
+
+        log.info("Executing create() -> Request: {}", objectToJson(request));
+        BankEntity bank = BankEntity.builder()
+                .code(request.getCode())
+                .name(request.getName())
+                .country(request.getCountry())
+                .swiftCode(request.getSwiftCode())
+                .build();
+
+        return BankResponse.fromEntity(repository.save(bank));
+    }
+
+    @Override
+    public BankResponse getById(Long id) {
+        log.info("Executing getById() -> Id: {}", id);
+        return repository.findById(id)
+                .map(BankResponse::fromEntity)
+                .orElseThrow(() -> new BankNotFoundException(id));
+    }
+
+    @Override
+    public BankResponse getByCode(String code) {
+        log.info("Executing getByCode() -> Code: {}", code);
+        return repository.findByCode(code)
+                .map(BankResponse::fromEntity)
+                .orElseThrow(() -> new BankNotFoundException(code));
+    }
+
+    @Override
+    public List<BankResponse> getAll() {
+        log.info("Executing getAll()");
+        return repository.findAll()
+                .stream()
+                .map(BankResponse::fromEntity)
+                .toList();
+    }
+
+    @Override
+    public BankResponse update(Long id, BankRequest request) {
+        BankEntity bank = repository.findById(id)
+                .orElseThrow(() -> new BankNotFoundException(id));
+
+        if (!bank.getCode().equals(request.getCode())
+                && repository.existsByCode(request.getCode())) {
+            throw new DuplicateBankCodeException(request.getCode());
+        }
+
+        log.info("Executing update() -> Id: {} - Request: {}", id, objectToJson(request));
+        bank.setCode(request.getCode());
+        bank.setName(request.getName());
+        bank.setCountry(request.getCountry());
+        bank.setSwiftCode(request.getSwiftCode());
+        bank.setActive(request.isActive());
+
+        return BankResponse.fromEntity(repository.save(bank));
+    }
+
+    @Override
+    public void delete(Long id) {
+        log.info("Executing delete() -> Id: {}", id);
+        if (!repository.existsById(id)) {
+            throw new BankNotFoundException(id);
+        }
+        repository.deleteById(id);
+    }
+
+    private String objectToJson(Object obj) {
+        try {
+            return mapper.writeValueAsString(obj);
+        } catch (Exception e) {
+            return "JSON_ERROR";
+        }
+    }
+}

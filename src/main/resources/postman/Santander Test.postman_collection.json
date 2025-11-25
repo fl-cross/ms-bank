@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "62568662-b276-4a1d-8ba5-b08d572611b9",
+		"name": "Santander Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21334545"
+	},
+	"item": [
+		{
+			"name": "GetBankById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "YWJjMTIzIT8kKiYoKS0r",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/bank-service/api/banks/5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bank-service",
+						"api",
+						"banks",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBankByCode",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "YWJjMTIzIT8kKiYoKS0r",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/bank-service/api/banks/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bank-service",
+						"api",
+						"banks",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllBanks",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "YWJjMTIzIT8kKiYoKS0r",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/bank-service/api/banks",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bank-service",
+						"api",
+						"banks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateBank",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "YWJjMTIzIT8kKiYoKS0r",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"AR-BNA\",\r\n    \"name\": \"City Cooperativa SA 2\",\r\n    \"countrys\": \"COL\",\r\n    \"swiftCode\": \"FKSFJ2424\",\r\n    \"active\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/bank-service/api/banks/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bank-service",
+						"api",
+						"banks",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveNewBank",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "YWJjMTIzIT8kKiYoKS0r",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"CITY42\",\r\n    \"name\": \"City Bank SA\",\r\n    \"country\": \"ARG\",\r\n    \"swiftCode\": \"CTB42893\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/bank-service/api/banks",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bank-service",
+						"api",
+						"banks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteBank",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "YWJjMTIzIT8kKiYoKS0r",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/bank-service/api/banks/7",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bank-service",
+						"api",
+						"banks",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actuator",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "YWJjMTIzIT8kKiYoKS0r",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/bank-service/actuator/health",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bank-service",
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
