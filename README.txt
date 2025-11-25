@@ -1,23 +1,26 @@
-- Santander Río, Ejercicio técnico:
+- Ejercicio técnico:
 
-Se realizó una aplicación que contiene un ABM REST de una entidad "Banco", utilizando el siguiente stack:
+Se desarrolló una aplicación REST CRUD (ABM) de la entidad Bank, utilizando el siguiente stack:
 
 1) Java 21
-2) SpringBoot v3.5.8
-3) Hibernate
-4) Persistencia de datos en Memoria (H2)
-5) Swagger Api p/documentación de endpoints e información de Entidad Request.
-6) Tests unitarios con Mockito
-7) Arquitectura sencilla
-8) Seguridad en peticiónes mediante Authentication por Bearer Token y configuración CORS
+2) Spring Boot 3.5.8
+3) Jakarta Persistence (JPA)
+4) Base de datos en memoria H2
+5) Swagger/OpenAPI para documentación
+6) Tests unitarios con JUnit + Mockito
+7) Arquitectura en capas sencilla (Controller → Service → Repository)
+8) Seguridad mediante Bearer Token + configuración CORS
+9) Spring Actuator.
 
 * Pasos:
-1) Ejecutar mvn clean install para descargar dependencias utilizadas.
-2) Validar el IDE configurado en Java 21
-3) Dar Run a la clase MsBankApplication
-4) Listo!
+1) Ejecutar mvn clean install.
+3) Dar Run a la clase MsBankApplication.
 
-* URLs:
-Actuador: http://localhost:8080/bank-service/actuator/health
-Swagger: http://localhost:8080/bank-service/swagger-ui/index.html
-H2Database: http://localhost:8080/bank-service/h2-console
+* URLs principales
+
+Health Check (Actuator)
+    http://localhost:8080/bank-service/actuator/health
+Swagger UI
+    http://localhost:8080/bank-service/swagger-ui/index.html
+Consola de H2
+    http://localhost:8080/bank-service/h2-console

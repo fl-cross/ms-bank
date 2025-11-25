@@ -40,11 +40,10 @@ class BankServiceImplTest {
 
     @Test
     void create_WhenCodeAlreadyExists_ShouldThrowDuplicateBankCodeException() {
-        // given
+
         BankRequest request = buildRequest("BNA", "Banco Nación");
         when(repository.existsByCode("BNA")).thenReturn(true);
 
-        // when + then
         DuplicateBankCodeException ex = assertThrows(
                 DuplicateBankCodeException.class,
                 () -> service.create(request)
@@ -84,6 +83,7 @@ class BankServiceImplTest {
 
     @Test
     void update_WhenCodeIsSame_ShouldUpdateSuccessfully() {
+
         Long idToUpdate = 1L;
 
         BankRequest request = buildRequest("BNA", "Banco Nación Nuevo Nombre");

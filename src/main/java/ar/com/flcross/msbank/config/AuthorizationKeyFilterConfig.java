@@ -1,4 +1,4 @@
-package ar.com.flcross.msbank.security;
+package ar.com.flcross.msbank.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class AuthorizationKeyFilter extends OncePerRequestFilter {
+public class AuthorizationKeyFilterConfig extends OncePerRequestFilter {
 
     @Value("${app.security.token}")
     private String configuredToken;

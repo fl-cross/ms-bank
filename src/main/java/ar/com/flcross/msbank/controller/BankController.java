@@ -61,7 +61,7 @@ public class BankController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}")
     @Operation(
             summary = "Actualizar banco",
             description = "Actualiza un banco específico por Id"
