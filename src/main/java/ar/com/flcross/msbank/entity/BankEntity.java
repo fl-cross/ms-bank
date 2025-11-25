@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "BANK", uniqueConstraints = {
@@ -35,12 +35,13 @@ public class BankEntity {
     @Column(name = "swift_code")
     private String swiftCode;
 
+    @Builder.Default
     @Column(name = "is_active", nullable = false)
-    private boolean active;
+    private boolean active = true;
 
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private Date updatedAt;
+    private LocalDateTime  updatedAt;
 }

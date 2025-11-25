@@ -4,7 +4,7 @@ import ar.com.flcross.msbank.dto.bank.BankRequest;
 import ar.com.flcross.msbank.dto.bank.BankResponse;
 import ar.com.flcross.msbank.entity.BankEntity;
 import ar.com.flcross.msbank.exception.dedicated.BankNotFoundException;
-import ar.com.flcross.msbank.exception.dedicated.DuplicatedBankException;
+import ar.com.flcross.msbank.exception.dedicated.DuplicateBankCodeException;
 import ar.com.flcross.msbank.repository.BankRepository;
 import ar.com.flcross.msbank.service.BankService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class BankServiceImpl implements BankService {
     @Override
     public BankResponse create(BankRequest request) {
         if (repository.existsByCode(request.getCode())) {
-            throw new DuplicatedBankException("Bank with code " + request.getCode() + " already exists");
+            throw new DuplicateBankCodeException(request.getCode());
         }
 
         BankEntity bank = BankEntity.builder()
@@ -29,7 +29,6 @@ public class BankServiceImpl implements BankService {
                 .name(request.getName())
                 .country(request.getCountry())
                 .swiftCode(request.getSwiftCode())
-                .active(request.isActive())
                 .build();
 
         return BankResponse.fromEntity(repository.save(bank));
@@ -40,6 +39,13 @@ public class BankServiceImpl implements BankService {
         return repository.findById(id)
                 .map(BankResponse::fromEntity)
                 .orElseThrow(() -> new BankNotFoundException(id));
+    }
+
+    @Override
+    public BankResponse getByCode(String code) {
+        return repository.findByCode(code)
+                .map(BankResponse::fromEntity)
+                .orElseThrow(() -> new BankNotFoundException(code));
     }
 
     @Override
@@ -55,9 +61,16 @@ public class BankServiceImpl implements BankService {
         BankEntity bank = repository.findById(id)
                 .orElseThrow(() -> new BankNotFoundException(id));
 
+        if (!bank.getCode().equals(request.getCode())
+                && repository.existsByCode(request.getCode())) {
+            throw new DuplicateBankCodeException(request.getCode());
+        }
+
+        bank.setCode(request.getCode());
         bank.setName(request.getName());
         bank.setCountry(request.getCountry());
         bank.setSwiftCode(request.getSwiftCode());
+        bank.setActive(request.isActive());
 
         return BankResponse.fromEntity(repository.save(bank));
     }

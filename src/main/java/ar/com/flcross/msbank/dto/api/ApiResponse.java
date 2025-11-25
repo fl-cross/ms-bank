@@ -1,18 +1,15 @@
 package ar.com.flcross.msbank.dto.api;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T> {
 
     private String code;
@@ -23,19 +20,18 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> success(T data) {
         return ApiResponse.<T>builder()
-                .code("0000")
-                .message("Success.")
+                .code("B000")
+                .message("Success")
                 .timestamp(LocalDateTime.now())
                 .data(data)
                 .build();
     }
 
-    public static ApiResponse<Object> error(String code, String message) {
-        return ApiResponse.builder()
+    public static <T> ApiResponse<T> error(String code, String message) {
+        return ApiResponse.<T>builder()
                 .code(code)
                 .message(message)
                 .timestamp(LocalDateTime.now())
-                .data(Collections.emptyMap())
                 .build();
     }
 }

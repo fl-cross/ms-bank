@@ -20,4 +20,18 @@ spring:
 
 logging:
   level:
-    org.hibernate.SQL: debug
+    org.hibernate.SQL: error
+
+server:
+  servlet:
+    context-path: /bank-service
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui
+
+app:
+  security:
+    token: "Bearer YWJjMTIzIT8kKiYoKS0r"
